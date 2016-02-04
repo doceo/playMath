@@ -1,12 +1,16 @@
 
+// questa pagina web affianca il flusso acquisito dalla webcam all'immagine istantanea che si può acquisire tramite un tasto
+
+
 <!DOCTYPE html>
 <html>
     <head>
-        <title>HTML5 Webcam Example</title>
+       <title>PlaySchool</title>
     </head>
     <body>
         <video autoplay="true" id="video" width="320"></video>
-
+        <button id="photo" onclick="takePhoto();">Take photo</button>
+        <canvas id="canvas"></canvas>
         <script>
             var video = document.getElementById('video');
 
@@ -23,11 +27,11 @@
             var onSuccess = function(stream) {
                 //Firefox
                 if (navigator.mozGetUserMedia) {
-                    video.mozSrcObject = stream;
+                     video.mozSrcObject = stream;
                 } else {
-                    //Chrome,Opera
-                    var vendorURL = window.URL || window.webkitURL;
-                    video.src = vendorURL.createObjectURL(stream);
+                     //Chrome,Opera
+                     var vendorURL = window.URL || window.webkitURL;
+                     video.src = vendorURL.createObjectURL(stream);
                 }
             };
 
@@ -37,6 +41,19 @@
 
             navigator.getMedia(options, onSuccess, onError);
 
+            function takePhoto() {
+                
+                var canvas = document.getElementById('canvas');
+                
+                var canvasWidth = 320;
+                var canvasHeight = video.videoHeight / (video.videoWidth / canvasWidth);
+                canvas.setAttribute('width', canvasWidth);
+                canvas.setAttribute('height', canvasHeight);
+              
+                //drawImage è il metodo che permette di acquisire l'immagine dalla webcam
+                canvas.getContext('2d').drawImage(video, 0, 0, canvasWidth, canvasHeight);
+            } 
+            
         </script>
     </body>
 </html>
