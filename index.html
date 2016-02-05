@@ -1,17 +1,37 @@
 
-// questa pagina web affianca il flusso acquisito dalla webcam all'immagine istantanea che si può acquisire tramite un tasto
+
 
 
 <!DOCTYPE html>
 <html>
+
+<!-- questa pagina web affianca il flusso acquisito dalla webcam all'immagine istantanea che si può acquisire tramite un tasto-->
+
     <head>
        <title>PlaySchool</title>
+
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+        integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
     </head>
     <body>
-        <video autoplay="true" id="video" width="320"></video>
-        <button id="photo" onclick="takePhoto();">Take photo</button>
-        <canvas id="canvas"></canvas>
-        <script>
+  <div class="container">
+
+    <div class="page-header">
+      <h1>PlaySchool</h1>
+    </div>
+
+   <div class="row">
+      <div class="col-md-4"> <video autoplay="true" id="video" width="320"></video></div>
+
+        <div class="col-md-4"><canvas id="canvas"></canvas></div>
+  </div> <!-- row -->  
+<div class="row">
+        <div class="col-md-2"><button id="photo" onclick="takePhoto();">Scatta</button></div>
+</div>
+  </div> <!-- container -->  
+      <script>
             var video = document.getElementById('video');
 
             //Cross Browser user media function
@@ -55,5 +75,6 @@
             } 
             
         </script>
+
     </body>
 </html>
