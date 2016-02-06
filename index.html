@@ -28,7 +28,7 @@
       </div> <!-- /row -->  
 
       <div class="row">
-        <div class="col-md-offset-2 col-md-4"><button class="btn btn-primary btn-block" id="photo" onclick="takePhoto();">Scatta</button></div>
+        <div class="col-md-offset-2 col-md-4"><button class="btn btn-primary btn-block" id="photo" onclick="photo();">Scatta</button></div>
       </div>
 
     </div> <!-- /container -->  
@@ -65,8 +65,11 @@ var onError = function(err) {
 navigator.getMedia(options, onSuccess, onError);
 
 
+
 function photo () {
-  takePhonto();
+  canvasDimension = takePhoto();
+  var img_data = canvas.getContext('2d').getImageData(0, 0, canvasDimension.canvasWidth, canvasDimension.canvasHeight);
+  console.log(img_data);
 }
 
 function takePhoto() {
@@ -74,11 +77,17 @@ function takePhoto() {
 
   var canvasWidth = 320;
   var canvasHeight = video.videoHeight / (video.videoWidth / canvasWidth);
+
   canvas.setAttribute('width', canvasWidth);
   canvas.setAttribute('height', canvasHeight);
 
   //drawImage è il metodo che permette di acquisire l'immagine dalla webcam
   canvas.getContext('2d').drawImage(video, 0, 0, canvasWidth, canvasHeight);
+
+  return {
+    canvasWidth: canvasWidth,
+    canvasHeight: canvasHeight
+  };
 } 
 
 // Indirizzo IP del server
