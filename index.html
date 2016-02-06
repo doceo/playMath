@@ -11,8 +11,10 @@
        <title>PlaySchool</title>
 
 
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
         integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <script src="/socket.io/socket.io.js"></script>
 
     </head>
     <body>
@@ -31,7 +33,9 @@
         <div class="col-md-2"><button id="photo" onclick="takePhoto();">Scatta</button></div>
 </div>
   </div> <!-- container -->  
-      <script>
+      
+
+	<script>
             var video = document.getElementById('video');
 
             //Cross Browser user media function
@@ -61,6 +65,12 @@
 
             navigator.getMedia(options, onSuccess, onError);
 
+
+	    function photo (){
+
+	    takePhonto();
+}
+
             function takePhoto() {
                 
                 var canvas = document.getElementById('canvas');
@@ -74,7 +84,30 @@
                 canvas.getContext('2d').drawImage(video, 0, 0, canvasWidth, canvasHeight);
             } 
             
-        </script>
+
+
+    // Indirizzo IP del server
+    // cambiare l'IP del server qui prima di lanciare l'applicazione
+    //var SERVER_IP = "192.168.1.2";
+    var SERVER_IP = "192.168.1.241";
+
+    // la porta su cui il server e' in ascolto.
+    // NON modificare a meno che non
+    // sai esattamente cosa stai facendo
+    var SERVER_PORT ="3000";
+
+    // crea il socket con il server
+    var socket = io.connect(SERVER_IP+':'+SERVER_PORT);
+
+    // Insieme al messaggio 'update_image'
+
+    socket.on('update_image', function(data) {
+      var img_tag = document.getElementById('image');
+      
+      img_tag.setAttribute('src', 'data:image/jpeg;base64,' + data.buffer);
+    });
+    </script>
+
 
     </body>
 </html>

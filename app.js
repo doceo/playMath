@@ -10,6 +10,9 @@ server.listen(3000);
 // quando il client richiede (con metodo GET) il
 // percorso '/', invia il file index.html
 app.get('/', function(req, res) {
+
+  console.log('user connected');
+
   res.sendFile(__dirname+'/index.html');
 });
 
