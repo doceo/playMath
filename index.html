@@ -1,111 +1,105 @@
-
-
-
-
 <!DOCTYPE html>
+
 <html>
 
-<!-- questa pagina web affianca il flusso acquisito dalla webcam all'immagine istantanea che si può acquisire tramite un tasto-->
+  <!-- questa pagina web affianca il flusso acquisito dalla webcam all'immagine istantanea che si può acquisire tramite un tasto-->
 
-    <head>
-       <title>PlaySchool</title>
+  <head>
+    <meta charset="utf-8">
+    <title>PlaySchool</title>
 
-
-     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
-        integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+                           integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
     <script src="/socket.io/socket.io.js"></script>
+  </head>
 
-    </head>
-    <body>
-  <div class="container">
+  <body>
 
-    <div class="page-header">
-      <h1>PlaySchool</h1>
-    </div>
+    <div class="container">
 
-   <div class="row">
-      <div class="col-md-4"> <video autoplay="true" id="video" width="320"></video></div>
+      <div class="page-header">
+        <h1>PlaySchool</h1>
+      </div>
 
+      <div class="row">
+        <div class="col-md-offset-2 col-md-4 text-center"> <video autoplay="true" id="video" width="320"></video></div>
         <div class="col-md-4"><canvas id="canvas"></canvas></div>
-  </div> <!-- row -->  
-<div class="row">
-        <div class="col-md-2"><button id="photo" onclick="takePhoto();">Scatta</button></div>
-</div>
-  </div> <!-- container -->  
+      </div> <!-- /row -->  
+
+      <div class="row">
+        <div class="col-md-offset-2 col-md-4"><button class="btn btn-primary btn-block" id="photo" onclick="takePhoto();">Scatta</button></div>
+      </div>
+
+    </div> <!-- /container -->  
       
 
-	<script>
-            var video = document.getElementById('video');
+    <script>
+var video = document.getElementById('video');
 
-            //Cross Browser user media function
-            navigator.getMedia = (navigator.getUserMedia ||
-                    navigator.webkitGetUserMedia ||
-                    navigator.mozGetUserMedia);
+//Cross Browser user media function
+navigator.getMedia = (navigator.getUserMedia ||
+    navigator.webkitGetUserMedia ||
+    navigator.mozGetUserMedia);
 
-            var options = {
-                video: true,
-                audio: false
-            };
+var options = {
+  video: true,
+  audio: false
+};
 
-            var onSuccess = function(stream) {
-                //Firefox
-                if (navigator.mozGetUserMedia) {
-                     video.mozSrcObject = stream;
-                } else {
-                     //Chrome,Opera
-                     var vendorURL = window.URL || window.webkitURL;
-                     video.src = vendorURL.createObjectURL(stream);
-                }
-            };
+var onSuccess = function(stream) {
+  //Firefox
+  if (navigator.mozGetUserMedia) {
+    video.mozSrcObject = stream;
+  } else {
+    //Chrome,Opera
+    var vendorURL = window.URL || window.webkitURL;
+    video.src = vendorURL.createObjectURL(stream);
+  }
+};
 
-            var onError = function(err) {
-                console.log("An error occured! " + err);
-            };
+var onError = function(err) {
+  console.log("An error occured! " + err);
+};
 
-            navigator.getMedia(options, onSuccess, onError);
+navigator.getMedia(options, onSuccess, onError);
 
 
-	    function photo (){
-
-	    takePhonto();
+function photo () {
+  takePhonto();
 }
 
-            function takePhoto() {
-                
-                var canvas = document.getElementById('canvas');
-                
-                var canvasWidth = 320;
-                var canvasHeight = video.videoHeight / (video.videoWidth / canvasWidth);
-                canvas.setAttribute('width', canvasWidth);
-                canvas.setAttribute('height', canvasHeight);
-              
-                //drawImage è il metodo che permette di acquisire l'immagine dalla webcam
-                canvas.getContext('2d').drawImage(video, 0, 0, canvasWidth, canvasHeight);
-            } 
-            
+function takePhoto() {
+  var canvas = document.getElementById('canvas');
 
+  var canvasWidth = 320;
+  var canvasHeight = video.videoHeight / (video.videoWidth / canvasWidth);
+  canvas.setAttribute('width', canvasWidth);
+  canvas.setAttribute('height', canvasHeight);
 
-    // Indirizzo IP del server
-    // cambiare l'IP del server qui prima di lanciare l'applicazione
-    //var SERVER_IP = "192.168.1.2";
-    var SERVER_IP = "192.168.1.241";
+  //drawImage è il metodo che permette di acquisire l'immagine dalla webcam
+  canvas.getContext('2d').drawImage(video, 0, 0, canvasWidth, canvasHeight);
+} 
 
-    // la porta su cui il server e' in ascolto.
-    // NON modificare a meno che non
-    // sai esattamente cosa stai facendo
-    var SERVER_PORT ="3000";
+// Indirizzo IP del server
+// cambiare l'IP del server qui prima di lanciare l'applicazione
+//var SERVER_IP = "192.168.1.2";
+//var SERVER_IP = "127.0.0.1";
 
-    // crea il socket con il server
-    var socket = io.connect(SERVER_IP+':'+SERVER_PORT);
+// la porta su cui il server e' in ascolto.
+// NON modificare a meno che non
+// sai esattamente cosa stai facendo
+//var SERVER_PORT ="3000";
 
-    // Insieme al messaggio 'update_image'
+// crea il socket con il server
+//var socket = io.connect(SERVER_IP+':'+SERVER_PORT);
 
-    socket.on('update_image', function(data) {
-      var img_tag = document.getElementById('image');
-      
-      img_tag.setAttribute('src', 'data:image/jpeg;base64,' + data.buffer);
-    });
+// Insieme al messaggio 'update_image'
+//socket.on('update_image', function(data) {
+//  var img_tag = document.getElementById('image');
+//
+//  img_tag.setAttribute('src', 'data:image/jpeg;base64,' + data.buffer);
+//});
     </script>
 
 
