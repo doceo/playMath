@@ -67,9 +67,13 @@ navigator.getMedia(options, onSuccess, onError);
 
 
 function photo () {
-  canvasDimension = takePhoto();
-  var img_data = canvas.getContext('2d').getImageData(0, 0, canvasDimension.canvasWidth, canvasDimension.canvasHeight);
-  console.log(img_data);
+  takePhoto();
+
+  var img = canvas.toDataURL('image/png');
+
+  if (socket) {
+    socket.emit('photo_capture', {buffer: img.toString('base64')});
+  }
 }
 
 function takePhoto() {
@@ -83,25 +87,20 @@ function takePhoto() {
 
   //drawImage è il metodo che permette di acquisire l'immagine dalla webcam
   canvas.getContext('2d').drawImage(video, 0, 0, canvasWidth, canvasHeight);
-
-  return {
-    canvasWidth: canvasWidth,
-    canvasHeight: canvasHeight
-  };
 } 
 
 // Indirizzo IP del server
 // cambiare l'IP del server qui prima di lanciare l'applicazione
 //var SERVER_IP = "192.168.1.2";
-//var SERVER_IP = "127.0.0.1";
+var SERVER_IP = "127.0.0.1";
 
 // la porta su cui il server e' in ascolto.
 // NON modificare a meno che non
 // sai esattamente cosa stai facendo
-//var SERVER_PORT ="3000";
+var SERVER_PORT ="3000";
 
 // crea il socket con il server
-//var socket = io.connect(SERVER_IP+':'+SERVER_PORT);
+var socket = io.connect(SERVER_IP+':'+SERVER_PORT);
 
 // Insieme al messaggio 'update_image'
 //socket.on('update_image', function(data) {
