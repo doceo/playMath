@@ -1,4 +1,4 @@
-# playMath
+# playSchool
 
 ## Autori
 Autore: Diomede Mazzone con la collaborazione di Fabio Z Tessitore (@FabioZTessitore)
@@ -11,7 +11,8 @@ Versione Stabile: 0.1
 Licenza: GPL 3.0 o successive
 
 Questo software ha scopo didattico, gli autori non si assumono la resposabilità di eventuali malfunzionamenti.
-Consiste in un server che sfrutta la tecnologia Node per dialogare con un client connesso sulla porta 3000. Il client visualizza il flusso video acquisito da webcam e invia al server il frame scelto dall'utente.
+Consiste in un server che sfrutta la tecnologia Node per dialogare con un client connesso sulla porta 3000. Il client visualizza il flusso video acquisito da webcam e invia al server il frame scelto dall'utente. 
+
 
 ##Requisiti
 
@@ -20,7 +21,7 @@ Consiste in un server che sfrutta la tecnologia Node per dialogare con un client
 * nodejs (https://nodejs.org/en/)
 * Expressjs (http://expressjs.com/)
 * socket.io (http://socket.io/)
-* Python
+* Python (matplotlib, numpy, cv2)
 
 ##Istallazione e Avvio
 ## Istallazione e Avvio
