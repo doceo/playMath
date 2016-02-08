@@ -33,10 +33,6 @@ Per l'installazione di tali dipendenze:
 ```bash
 $ npm install
 ```
-  
-* per l'esecuzione prima bisogna lanciare lo script python, successivamente il server node:
-```bash 
-$ python camera.py
 ```
 ```bash
 $ node app.js
