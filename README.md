@@ -31,13 +31,11 @@ Consiste in un server che sfrutta la tecnologia Node per dialogare con un client
 * l'applicazione server, scritta utilizzando la tecnologia NodeJs, fa uso dei
 moduli ExpressJs e Socket.io.
 Per l'installazione di tali dipendenze:
-```
-bash
+```bash
 $ npm install
 ```
 
-```
-bash
+```bash
 $ node app.js
 ```
 oppure (per distribuzioni basate su Debian)

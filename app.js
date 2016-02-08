@@ -21,6 +21,13 @@ app.get('/', function(req, res) {
 io.on('connection', function(socket) {
   // all'avvio di una connessione viene creato un socket!
   console.log('stabilita una connessione');
+
+  socket.on('photo_capture', function(data) {
+    console.log('ricevuto buffer');
+    var img = data.buffer.replace(/^data:image\/\w+;base64,/, "");
+    var buf = new Buffer(img, 'base64');
+    fs.writeFile('image.png', buf);
+  });
 });
 
 console.log('server listening on port 3000');
