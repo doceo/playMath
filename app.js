@@ -10,6 +10,7 @@ server.listen(3000);
 // quando il client richiede (con metodo GET) il
 // percorso '/', invia il file index.html
 app.get('/', function(req, res) {
+  console.log('è stato inviato il file index.html ad un client che ne ha fatto richiesta');
   res.sendFile(__dirname+'/index.html');
 });
 
@@ -19,7 +20,7 @@ app.get('/', function(req, res) {
 // Gestisce l'evento 'connection'
 io.on('connection', function(socket) {
   // all'avvio di una connessione viene creato un socket!
-  console.log('user connected');
+  console.log('stabilita una connessione');
 });
 
 console.log('server listening on port 3000');
