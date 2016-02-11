@@ -24,7 +24,6 @@ Consiste in un server che sfrutta la tecnologia Node per dialogare con un client
 * Python (matplotlib, numpy, cv2)
 
 ##Istallazione e Avvio
-## Istallazione e Avvio
 
 * modifica IP: nel file index.html bisogna modificare l'indirizzo IP del server
 

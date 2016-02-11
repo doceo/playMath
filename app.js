@@ -26,8 +26,21 @@ io.on('connection', function(socket) {
     console.log('ricevuto buffer');
     var img = data.buffer.replace(/^data:image\/\w+;base64,/, "");
     var buf = new Buffer(img, 'base64');
-    fs.writeFile('image.png', buf);
+    fs.writeFile('pictures/image.png', buf);
   });
+
+  // a connessione avvenuta,
+  // usa il modulo fs per monitorare il file match_res.jpg
+  fs.watch(__dirname+'/pictures/match_res.jpg', function(evt, filename) {
+    console.log('rilevata variazione immagine');
+
+    // in caso di variazione del file match_res.jpg lo reinvia
+    // al client tramite il socket precedentemente creato
+    fs.readFile(__dirname+'/pictures/match_res.jpg', function(err, buf) {
+      socket.emit('update_image', {image: true, buffer: buf.toString('base64')});
+    });
+  });
+
 });
 
 console.log('server listening on port 3000');
