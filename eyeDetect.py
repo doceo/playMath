@@ -23,10 +23,17 @@ eye = faceCascade.detectMultiScale(
 
 print "Found {0} eye!".format(len(eye))
 
+
 # Draw a rectangle around the faces
 for (x, y, w, h) in eye:
     cv2.rectangle(image, (x, y), (x+w, y+h), (0, 255, 0), 2)
 
-#cv2.imshow("eye found", image)
-cv2.imwrite('pictures/image_result.jpg', image)
+
+cv2.imwrite('pictures/image_result.jpg', image) 
+
+out_file = open("result.txt","w")
+out_file.write(str(len(eye)))
+out_file.close()
+	
+	
 cv2.waitKey(0)

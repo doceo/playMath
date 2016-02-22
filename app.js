@@ -2,6 +2,9 @@ var app = require('express')();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var fs = require('fs');
+var exec = require('child_process').exec;
+
+
 
 server.listen(3000);
 
@@ -22,21 +25,23 @@ io.on('connection', function(socket) {
   // all'avvio di una connessione viene creato un socket!
   console.log('stabilita una connessione');
 
-  socket.on('photo_capture', function(data) {
+    socket.on('photo_capture', function(data) {
     console.log('ricevuto buffer');
     var img = data.buffer.replace(/^data:image\/\w+;base64,/, "");
     var buf = new Buffer(img, 'base64');
-    fs.writeFile('pictures/image.png', buf);
+    fs.writeFile('pictures/image.jpg', buf);
+    
+    exec("eyeDetect.py pictures/image.jpg ojoright.xml");
   });
 
   // a connessione avvenuta,
   // usa il modulo fs per monitorare il file match_res.jpg
-  fs.watch(__dirname+'/pictures/match_res.jpg', function(evt, filename) {
+  fs.watch(__dirname+'/pictures/image_result.jpg', function(evt, filename) {
     console.log('rilevata variazione immagine');
 
     // in caso di variazione del file match_res.jpg lo reinvia
     // al client tramite il socket precedentemente creato
-    fs.readFile(__dirname+'/pictures/match_res.jpg', function(err, buf) {
+    fs.readFile(__dirname+'/pictures/image_result.jpg', function(err, buf) {
       socket.emit('update_image', {image: true, buffer: buf.toString('base64')});
     });
   });
