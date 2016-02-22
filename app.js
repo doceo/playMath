@@ -31,7 +31,7 @@ io.on('connection', function(socket) {
     var buf = new Buffer(img, 'base64');
     fs.writeFile('pictures/image.jpg', buf);
     
-    exec("eyeDetect.py pictures/image.jpg ojoright.xml");
+    exec("python eyeDetect.py pictures/image.jpg ojoright.xml");
   });
 
   // a connessione avvenuta,
