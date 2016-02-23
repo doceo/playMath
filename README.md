@@ -21,7 +21,7 @@ Consiste in un server che sfrutta la tecnologia Node per dialogare con un client
 * nodejs (https://nodejs.org/en/)
 * Expressjs (http://expressjs.com/)
 * socket.io (http://socket.io/)
-* Python (matplotlib, numpy, cv2)
+* Python (numpy, cv2)
 
 ##Istallazione e Avvio
 
@@ -42,4 +42,5 @@ oppure (per distribuzioni basate su Debian)
 $ nodejs app.js
 ```
 
-# Test Dev
+# Riconoscimento facciale
+lo script python e' un adattamento dello script proposto da https://realpython.com/blog/python/face-recognition-with-python/, quindi dal fork del rispettivo progetto OpenSource https://github.com/shantnu/FaceDetect
