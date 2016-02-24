@@ -31,6 +31,13 @@
         <div class="col-md-offset-2 col-md-2"><button class="btn btn-primary btn-block" id="photo" onclick="photo();">Scatta</button></div>
       </div>
 
+<div class="row">
+      <div class="col-md-6 col-md-offset-3">
+     </div>
+<h4 id="domanda"> </h4>
+
+</div>
+
 
 <div class="row">
 
@@ -120,6 +127,11 @@ socket.on('update_image', function(data) {
 
   img_tag.setAttribute('src', 'data:image/jpeg;base64,' + data.buffer);
 });
+
+//socket.on('update_domanda',function(data){
+//  var text_tag = document.getElementByid('domanda');
+//	img_tag =document.innerHTML = x;
+
     </script>
 
 

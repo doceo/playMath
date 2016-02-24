@@ -4,7 +4,10 @@ var io = require('socket.io')(server);
 var fs = require('fs');
 var exec = require('child_process').exec;
 
+var rand = Math.floor((Math.random() * 100) + 1);
 
+var domanda;
+var scelta;
 
 server.listen(3000);
 
@@ -16,6 +19,17 @@ app.get('/', function(req, res) {
   console.log('è stato inviato il file index.html ad un client che ne ha fatto richiesta');
   res.sendFile(__dirname+'/index.html');
 });
+
+//decide la domanda da fare
+
+if (rand%2) {
+	domanda ="lascia entrambi gli occhi scoperti e scatta una foto";
+	scelta =2;
+}else{
+	domanda="copri un occhio e scatta una foto";
+	scelta=1;
+}
+
 
 // usa socket.io per registrare le azioni da compiere
 // quando si verificano certi eventi.
@@ -33,6 +47,8 @@ io.on('connection', function(socket) {
     
     exec("python eyeDetect.py pictures/image.jpg ojoright.xml");
   });
+
+exec("cp pictures/PlaySchool.jpg pictures/image_result.jpg");
 
   // a connessione avvenuta,
   // usa il modulo fs per monitorare il file match_res.jpg
