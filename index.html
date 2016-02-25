@@ -128,12 +128,14 @@ socket.on('update_image', function(data) {
   img_tag.setAttribute('src', 'data:image/jpeg;base64,' + data.buffer);
 });
 
+var messages[];
+
 socket.on('message', function (data) {
         if(data.message) {
             messages.push(data.message);
             var domanda = '';
             for(var i=0; i<messages.length; i++) {
-                html += messages[i] + '<br />';
+                domanda += messages[i] + '<br />';
             }
             document.getElementById("domanda").innerHTML = domanda;
         } else {

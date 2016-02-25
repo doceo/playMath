@@ -56,11 +56,11 @@ exec("cp pictures/PlaySchool.jpg pictures/image_result.jpg");
 
 
   // a connessione avvenuta,
-  // usa il modulo fs per monitorare il file match_res.jpg
+  // usa il modulo fs per monitorare il file image_res.jpg
   fs.watch(__dirname+'/pictures/image_result.jpg', function(evt, filename) {
-    console.log('rilevata variazione immagine');
+    console.log('rilevata variazione immagine')
 
-    // in caso di variazione del file match_res.jpg lo reinvia
+    // in caso di variazione del file image_res.jpg lo reinvia
     // al client tramite il socket precedentemente creato
     fs.readFile(__dirname+'/pictures/image_result.jpg', function(err, buf) {
       socket.emit('update_image', {image: true, buffer: buf.toString('base64')});
