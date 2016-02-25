@@ -11,49 +11,49 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
                            integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
-    <script src="/socket.io/socket.io.js"></script>
-  </head>
+<script src="/socket.io/socket.io.js"></script>
+</head>
 
-  <body>
+<body>
 
-    <div class="container">
+	<div class="container">
 
-      <div class="page-header">
-        <h1>PlaySchool</h1>
-      </div>
+   		<div class="page-header">
+			<h1>PlaySchool</h1>
+		</div>
 
-      <div class="row">
-        <div class="col-md-offset-2 col-md-4 text-center"> <video autoplay="true" id="video" width="320"></video></div>
-        <div class="col-md-4"><canvas id="canvas"></canvas></div>
-      </div> <!-- /row -->  
+		<div class=row>
+			<div class="col-md-6 col-md-offset-3">
+	    		<div id="domanda"> </div>
+			</div>
+				
+		</div>
 
-      <div class="row">
-        <div class="col-md-offset-2 col-md-2"><button class="btn btn-primary btn-block" id="photo" onclick="photo();">Scatta</button></div>
-      </div>
+      	<div class="row">
+        	<div class="col-md-offset-2 col-md-4 text-center"> <video autoplay="true" id="video" width="320"></video></div>
+        	<div class="col-md-4"><canvas id="canvas"></canvas></div>
+      	</div> <!-- /row -->  
 
-<div class="row">
-      <div class="col-md-6 col-md-offset-3">
-     </div>
-<h4 id="domanda"> </h4>
+      	<div class="row">
+        	<div class="col-md-offset-2 col-md-2"><button class="btn btn-primary btn-block" id="photo" onclick="photo();">Scatta</button></div>
+      	
+		</div>
 
-</div>
+		<div class="row">
 
+      		<center>
+      			<div class="col-md-6 col-md-offset-3">
+					<h4>Immagine di verifica</h4>
+        			<img src="" id="image">
+      			</div>
+     		</center>
 
-<div class="row">
+	    </div>
 
-      <center>
-      <div class="col-md-6 col-md-offset-3">
-	<h3>Immagine di verifica</h3>
-        <img src="" id="image">
-      </div>
-     </center>
-
-    </div>
-
-    </div> <!-- /container -->  
+	</div> <!-- /container -->  
       
 
-    <script>
+<script>
 var video = document.getElementById('video');
 
 //Cross Browser user media function
@@ -128,9 +128,18 @@ socket.on('update_image', function(data) {
   img_tag.setAttribute('src', 'data:image/jpeg;base64,' + data.buffer);
 });
 
-//socket.on('update_domanda',function(data){
-//  var text_tag = document.getElementByid('domanda');
-//	img_tag =document.innerHTML = x;
+socket.on('message', function (data) {
+        if(data.message) {
+            messages.push(data.message);
+            var domanda = '';
+            for(var i=0; i<messages.length; i++) {
+                html += messages[i] + '<br />';
+            }
+            document.getElementById("domanda").innerHTML = domanda;
+        } else {
+            console.log("Errore:", data);
+        }
+    });
 
     </script>
 

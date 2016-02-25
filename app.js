@@ -4,8 +4,7 @@ var io = require('socket.io')(server);
 var fs = require('fs');
 var exec = require('child_process').exec;
 
-var rand = Math.floor((Math.random() * 100) + 1);
-
+var rand;
 var domanda;
 var scelta;
 
@@ -22,13 +21,6 @@ app.get('/', function(req, res) {
 
 //decide la domanda da fare
 
-if (rand%2) {
-	domanda ="lascia entrambi gli occhi scoperti e scatta una foto";
-	scelta =2;
-}else{
-	domanda="copri un occhio e scatta una foto";
-	scelta=1;
-}
 
 
 // usa socket.io per registrare le azioni da compiere
@@ -39,6 +31,19 @@ io.on('connection', function(socket) {
   // all'avvio di una connessione viene creato un socket!
   console.log('stabilita una connessione');
 
+    rand = Math.floor((Math.random() * 100) + 1);
+
+    if (rand%2) {
+	socket.emit('message',{message:'lascia entrambi gli occhi scoperti e scatta una foto'});
+	scelta =2;
+    }else{
+
+socket.emit('message',{message:'copri un occhio e scatta una foto'});	
+	scelta=1;
+    }
+
+exec("cp pictures/PlaySchool.jpg pictures/image_result.jpg");
+
     socket.on('photo_capture', function(data) {
     console.log('ricevuto buffer');
     var img = data.buffer.replace(/^data:image\/\w+;base64,/, "");
@@ -48,7 +53,7 @@ io.on('connection', function(socket) {
     exec("python eyeDetect.py pictures/image.jpg ojoright.xml");
   });
 
-exec("cp pictures/PlaySchool.jpg pictures/image_result.jpg");
+
 
   // a connessione avvenuta,
   // usa il modulo fs per monitorare il file match_res.jpg
